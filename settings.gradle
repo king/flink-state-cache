@@ -1,0 +1,4 @@
+rootProject.name = 'flink-state-cache'
+
+include ':lib'
+include ':examples'

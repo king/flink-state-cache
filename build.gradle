@@ -1,0 +1,13 @@
+ext {
+        flinkVersion = '1.11.2'
+}
+
+subprojects {
+        repositories {
+                jcenter()
+        }
+}
+
+wrapper {
+        gradleVersion = '6.6.1'
+}

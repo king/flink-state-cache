@@ -1,0 +1,82 @@
+plugins {
+        id 'java-library'
+        id 'maven-publish'
+        id 'signing'
+}
+
+dependencies {
+        compileOnly group: 'org.apache.flink', name: 'flink-streaming-java_2.11', version: flinkVersion
+        compileOnly group: 'org.apache.flink', name: 'flink-connector-kafka-0.10_2.11', version: flinkVersion
+        compileOnly group: 'org.apache.flink', name: 'flink-connector-filesystem_2.11', version: flinkVersion
+        compileOnly group: 'org.apache.flink', name: 'flink-statebackend-rocksdb_2.11', version: flinkVersion
+
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.8.47'
+        testImplementation group: 'junit', name: 'junit', version: '4.11'
+        testImplementation group: 'org.apache.flink', name: 'flink-streaming-java_2.11', version: flinkVersion
+}
+
+group = 'com.king'
+version = '1.0.0'
+
+java {
+        withJavadocJar()
+        withSourcesJar()
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+publishing {
+        publications {
+                mavenJava(MavenPublication) {
+                        artifactId = 'flink-state-cache'
+                        from components.java
+
+                        pom {
+                                name = 'Flink State Cache'
+                                description = 'A cache for Apache Flink state'
+                                url = 'https://github.com/king/flink-state-cache'
+                                licenses {
+                                        license {
+                                                name = 'The Apache License, Version 2.0'
+                                                url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                        }
+                                }
+                                developers {
+                                        developer {
+                                                id = 'juhamy'
+                                                name = 'Juha Mynttinen'
+                                                email = 'juha.mynttinen@king.com'
+                                        }
+                                }
+                                scm {
+                                        connection = 'scm:git:git@github.com:king/flink-state-cache.git'
+                                        developerConnection = 'scm:git:ssh://github.com:king/flink-state-cache.git'
+                                        url = 'http://github.com/king/flink-state-cache'
+                                }
+                        }
+                }
+        }
+        repositories {
+                maven {
+                        def releaseRepo = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                        def snapshotRepo = "https://oss.sonatype.org/content/repositories/snapshots/"
+                        url = isReleaseVersion ? releaseRepo : snapshotRepo
+                        credentials {
+                                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
+                                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+                        }
+                }
+        }}
+
+signing {
+        sign publishing.publications.mavenJava
+}
+tasks.withType(Sign) {
+        onlyIf { isReleaseVersion }
+}
+
+javadoc {
+        if(JavaVersion.current().isJava9Compatible()) {
+                options.addBooleanOption('html5', true)
+        }
+}
