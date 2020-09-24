@@ -8,9 +8,10 @@ State Cache is stable and extensively used in King production environments.
 
 # Usage
 
-State usage can be easiest explained by having a look at an example.
+State Cache usage can be easiest explained by having a look at an example. There's a fully functional Flink application using State Cache [Example.java](examples/src/main/java/com/king/flink/state/Example.java) in the [examples](
+examples) module. The following explains the most important pieces of the code.
 
-State cache can only be used in a `KeyedStream` in which there is Keyed State to be cached, i.e. Caching Operator State is unsupported. 
+State Cache can only be used in a `KeyedStream` in which there is Keyed State to be cached, i.e. caching Operator State is unsupported. 
 
 To hook the State Cache to Flink state, you need to use a lower level API (`DataStream.transform()`) than you'd normally use, such as `DataStream.map()`. `transform` is a public API and methods like `DataStream.map()`  use that internally.
 
