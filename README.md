@@ -8,6 +8,20 @@ State Cache is stable and extensively used in King production environments.
 
 # Usage
 
+Maven
+```
+<dependency>
+  <groupId>com.king</groupId>
+  <artifactId>flink-state-cache</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+Gradle
+```
+implementation 'com.king:flink-state-cache:1.0.0'
+```
+
 State Cache usage can be easiest explained by having a look at an example. There's a fully functional Flink application using State Cache [Example.java](examples/src/main/java/com/king/flink/state/Example.java) in the [examples](
 examples) module. The following explains the most important pieces of the code.
 
