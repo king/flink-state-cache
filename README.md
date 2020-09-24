@@ -1,5 +1,7 @@
 # State Cache for Flink state
 
+![Build](https://github.com/king/flink-state-cache/workflows/Build/badge.svg)
+
 State Cache is a single layer and two layered cache for caching Flink value states designed improve the performance of Flink applications using RocksDB state backend.
 
 State Cache is stable and extensively used in King production environments.
